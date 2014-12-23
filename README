@@ -1,0 +1,6 @@
+Requirements:
+
+- OpenSCAD (a version > 2014.03 taken from GIT or daily snapshots is recommended)
+- pstoedit
+- Inkscape
+- Python >= 2.7

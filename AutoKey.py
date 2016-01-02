@@ -30,7 +30,7 @@ BRAND_DIR = os.path.join(BASE_DIR, "branding")
 def main(argv=None):
     '''Command line options.'''
 
-    program_name = "AutoKey"
+    program_name = "AutoKey3D"
     program_version = "v%s" % __version__
 
     program_version_string = '%s %s' % (program_name, program_version)

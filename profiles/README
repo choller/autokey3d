@@ -1,0 +1,28 @@
+== General ==
+
+This directory contains profile data in SVG format.
+
+For each SVG profile, an optional tolerance file can be added to specify a
+material strength that should be removed when transforming the SVG into a key.
+
+This tolerance depends on the process of the profile extraction. If the profile
+has been extracted from a keyway picture, then a tolerance of 0.2 (rarely 0.15 
+or 0.25) is good. If the profile has been extracted from a key or a profile
+trace representing the key, then a 0.0 tolerance (default) should be used.
+
+The format of the files should be:
+
+X-Y.svg for the profile and X-Y.tol for the respective tolerance file, where
+
+X is the brand name (e.g. ABUS)
+Y is the profile name (e.g. AB1) if known, or the lock type if unknown.
+
+== List of Profiles ==
+
+ABUS        - AB1     - ABUS default profile (e.g. C83)
+ABUS        - AB95    - Default profile for the ABUS E20
+ABUS        - TS5000  - Profile for the ABUS TS5000 and XP1 locks
+ABUS        - V14     - Example profile taken from an ABUS V14
+BKS         - BK1     - BKS default profile (e.g. PZ88)
+CES         - CE41    - Newer CES default profile (e.g. CES 810)
+IKON        - RZL3    - Example profile taken from an IKON SK6

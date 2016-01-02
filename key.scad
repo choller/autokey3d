@@ -22,9 +22,7 @@ addaspace = bumpkey ? bump_addaspace : 0.0;
 addplatspace = bumpkey ? bump_addplatspace : 0.0;
 addcutdepth = bumpkey ? bump_addcutdepth : 0.0;
 
-if (!blank) {
-    keycomb = bumpkey ? [0,0,0,0,0,0] : combination;
-}
+keycomb = bumpkey ? [0,0,0,0,0,0] : combination;
 
 module keycombcuts() {
    for (i = [0:len(keycomb)-1]) { 

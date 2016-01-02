@@ -77,27 +77,49 @@ def main(argv=None):
         return 2
     
     # Do the key branding
-    with open(os.path.join(BASE_DIR, "branding-template.svg"), 'r') as f:
+    with open(os.path.join(BRAND_DIR, "branding-template.svg"), 'r') as f:
         branding = f.read()
     model = os.path.basename(opts.definition).replace(".scad", "")
 
-    # Read definitions
+    # Read system definition
     with open(opts.definition, 'r') as f:
         definition = f.read()
 
-    # Find tolerance/length in definition for branding
-    for line in definition.splitlines():
-        m = re.match("\s*tol\s*=\s*([\d\.]+)\s*;", line)
-        if m:
-          def_tol = m.group(1)
-          next
+    # Read profile definition
+    profile_definition_file = "%s.def" % opts.profile.replace(".svg", "")
+    with open(profile_definition_file, 'r') as f:
+        profile_definition = f.read()
 
+    def_tol = None
+    def_kl = None
+
+    # Look for length in system definition for branding
+    for line in definition.splitlines():
         m = re.match("\s*kl\s*=\s*([\d\.]+)\s*;", line)
         if m:
           def_kl = m.group(1)
           next
 
+    # Look for tolerance in profile definition for branding
+    for idx,line in enumerate(profile_definition.splitlines()):
+        m = re.match("\s*tol\s*=\s*([\d\.]+)\s*;", line)
+        if m:
+          def_tol = m.group(1)
+          def_tol_idx = idx
+          next
+
+    if def_kl is None:
+      print("Error: Failed to find key length in system definition file")
+      sys.exit(1)
+
+    if def_tol is None:
+      print("Error: Failed to find key length in system definition file")
+      sys.exit(1)
+
     if opts.tol:
+        lines = profile_definition.splitlines()
+        lines[def_tol_idx] = "tol = %s;" % opts.tol
+        profile_definition = "\n".join(lines)
         def_tol = opts.tol
 
     branding = branding.replace("%model%", model)
@@ -120,6 +142,8 @@ def main(argv=None):
         f.write("/* AUTO-GENERATED FILE - DO NOT EDIT */\n\n")
         f.write(baseSettings)
         f.write("\n")
+        f.write(profile_definition)
+        f.write("\n")
         f.write(definition)
         f.write("\n")
         
@@ -135,9 +159,6 @@ def main(argv=None):
             
         if opts.key:
             f.write("combination = [%s]\n" % opts.key)
-
-        if opts.tol:
-            f.write("tol = %s;\n" % opts.tol)
             
     subprocess.check_call(["inkscape", "-E", os.path.join(BASE_DIR, "profile.eps"), opts.profile])
     subprocess.check_call(["pstoedit", "-dt", "-f", "dxf:-polyaslines", os.path.join(BASE_DIR, "profile.eps"), os.path.join(BASE_DIR, "profile.dxf")], stderr=DEVNULL)

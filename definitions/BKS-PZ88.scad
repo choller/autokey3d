@@ -1,10 +1,3 @@
-// The tolerance to use when removing material from the profile
-tol=0.2;
-
-// Key profile height (including tolerance, i.e. measured on the lock, not the blank)
-// If you have information on the key blank height, add 2*tol.
-ph=9 + 2*tol;
-
 // Key length
 kl=27;
 
@@ -27,3 +20,7 @@ cutangle = 92;
 
 // Plateau spacing of the cut
 platspace = 0.8;
+
+
+bump_addplatspace = 0.6;
+bump_addcutdepth = 0.1;

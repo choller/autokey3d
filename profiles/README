@@ -2,13 +2,18 @@
 
 This directory contains profile data in SVG format.
 
-For each SVG profile, an optional tolerance file can be added to specify a
-material strength that should be removed when transforming the SVG into a key.
+For each SVG profile, a profile definitions file must be added to specify the
+profile height (ph) and the material strength that should be removed (tol) 
+when transforming the SVG into a key.
 
-This tolerance depends on the process of the profile extraction. If the profile
+The tolerance depends on the process of the profile extraction. If the profile
 has been extracted from a keyway picture, then a tolerance of 0.2 (rarely 0.15 
 or 0.25) is good. If the profile has been extracted from a key or a profile
 trace representing the key, then a 0.0 tolerance (default) should be used.
+
+The profile height is assumed to be measured on the lock, not on the key. If
+you have key measures instead, you should add 2*tol to your measurement to
+compensate.
 
 The format of the files should be:
 

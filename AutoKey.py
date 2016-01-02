@@ -20,6 +20,7 @@ import os
 import argparse
 import shutil
 import subprocess
+import re
 
 __version__ = 0.1
 
@@ -49,6 +50,7 @@ def main(argv=None):
     # Settings
     parser.add_argument("--definition", dest="definition", required=True, help="Path to the definition file to use", metavar="FILE")
     parser.add_argument("--profile", dest="profile", required=True, help="Path to the profile file to use", metavar="FILE")
+    parser.add_argument("--tolerance", dest="tol", required=False, help="Override tolerance with specified value", metavar="TOL")
 
     parser.add_argument('args', nargs=argparse.REMAINDER)
 
@@ -77,9 +79,29 @@ def main(argv=None):
     with open(os.path.join(BASE_DIR, "branding-template.svg"), 'r') as f:
         branding = f.read()
     model = os.path.basename(opts.definition).replace(".scad", "")
+
+    # Read definitions
+    with open(opts.definition, 'r') as f:
+        definition = f.read()
+
+    # Find tolerance/length in definition for branding
+    for line in definition.splitlines():
+        m = re.match("\s*tol\s*=\s*([\d\.]+)\s*;", line)
+        if m:
+          def_tol = m.group(1)
+          next
+
+        m = re.match("\s*kl\s*=\s*([\d\.]+)\s*;", line)
+        if m:
+          def_kl = m.group(1)
+          next
+
+    if opts.tol:
+        def_tol = opts.tol
+
     branding = branding.replace("%model%", model)
-    branding = branding.replace("%length%", "0") # TODO: Fix this
-    branding = branding.replace("%tol%", "0") # TODO: Fix this
+    branding = branding.replace("%length%", "%s" % def_kl)
+    branding = branding.replace("%tol%", "%s" % def_tol)
     with open(os.path.join(BASE_DIR, "branding.svg"), 'w') as f:
         f.write(branding)
     
@@ -91,16 +113,13 @@ def main(argv=None):
     # Read base settings
     with open(os.path.join(BASE_DIR, "base-settings.scad"), 'r') as f:
         baseSettings = f.read()
-        
-    with open(opts.definition, 'r') as f:
-        definition = f.read()
     
     # Compose real settings
     with open(os.path.join(BASE_DIR, "settings.scad"), 'w') as f:
         f.write("/* AUTO-GENERATED FILE - DO NOT EDIT */\n\n")
-        f.write(definition)
-        f.write("\n")
         f.write(baseSettings)
+        f.write("\n")
+        f.write(definition)
         f.write("\n")
         
         if opts.bumpkey:
@@ -115,6 +134,9 @@ def main(argv=None):
             
         if opts.key:
             f.write("combination = [%s]\n" % opts.key)
+
+        if opts.tol:
+            f.write("tol = %s;\n" % opts.tol)
             
     subprocess.check_call(["inkscape", "-E", os.path.join(BASE_DIR, "profile.eps"), opts.profile])
     subprocess.check_call(["pstoedit", "-dt", "-f", "dxf:-polyaslines", os.path.join(BASE_DIR, "profile.eps"), os.path.join(BASE_DIR, "profile.dxf")], stderr=DEVNULL)

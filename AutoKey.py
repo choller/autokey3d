@@ -25,6 +25,7 @@ import re
 __version__ = 0.1
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
+BRAND_DIR = os.path.join(BASE_DIR, "branding")
 
 def main(argv=None):
     '''Command line options.'''
@@ -102,13 +103,13 @@ def main(argv=None):
     branding = branding.replace("%model%", model)
     branding = branding.replace("%length%", "%s" % def_kl)
     branding = branding.replace("%tol%", "%s" % def_tol)
-    with open(os.path.join(BASE_DIR, "branding.svg"), 'w') as f:
+    with open(os.path.join(BRAND_DIR, "branding.svg"), 'w') as f:
         f.write(branding)
     
     DEVNULL = open(os.devnull, 'w')
     
-    subprocess.check_call(["inkscape", "-E", os.path.join(BASE_DIR, "branding.eps"), os.path.join(BASE_DIR, "branding.svg"),])
-    subprocess.check_call(["pstoedit", "-dt", "-f", "dxf:-polyaslines", os.path.join(BASE_DIR, "branding.eps"), os.path.join(BASE_DIR, "branding.dxf")], stderr=DEVNULL)
+    subprocess.check_call(["inkscape", "-E", os.path.join(BRAND_DIR, "branding.eps"), os.path.join(BRAND_DIR, "branding.svg"),])
+    subprocess.check_call(["pstoedit", "-dt", "-f", "dxf:-polyaslines", os.path.join(BRAND_DIR, "branding.eps"), os.path.join(BRAND_DIR, "branding.dxf")], stderr=DEVNULL)
     
     # Read base settings
     with open(os.path.join(BASE_DIR, "base-settings.scad"), 'r') as f:

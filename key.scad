@@ -52,7 +52,7 @@ module keycombcut(cutnum, cutlevel) {
 
 module branding(h) {
   linear_extrude(height=h,center=true)
-  import("branding.dxf");
+  import("branding/branding.dxf");
 }
 
 module rawprofile(h) {

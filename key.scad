@@ -1,18 +1,30 @@
 include <settings.scad>;
 
 // Key handle connector data
-khcx=3; // This parameter must be adjusted to barely fit all of the key profile,
-        // or even smaller if the core requires this
-khcy=ph+1; // This should always fit, as we know the profile height
-khcz=5; // This is just the length of the connector
+khcx=3;        // This parameter must be adjusted to barely fit all of the 
+               // key profile, or even smaller if the core requires this
+khcy=ph+1;     // This should always fit, as we know the profile height
+khcz=5;        // This is just the length of the connector
 khcxoff = 0.2; // Adjustment of the key handle connector in x-direction
 
 $fn = 100;
 
+// For debugging purposes only, you can override particular
+// profile or system definitions directly in the program, e.g.:
+//
+//cutangle = 100;
+//platspace = 0.0;
+//bump_addcutdepth = 0.0;
+
+// Do not change anything below unless you know what you are doing
+
 addaspace = bumpkey ? bump_addaspace : 0.0;
 addplatspace = bumpkey ? bump_addplatspace : 0.0;
 addcutdepth = bumpkey ? bump_addcutdepth : 0.0;
-keycomb = bumpkey ? [0,0,0,0,0,0] : combination;
+
+if (!blank) {
+    keycomb = bumpkey ? [0,0,0,0,0,0] : combination;
+}
 
 module keycombcuts() {
    for (i = [0:len(keycomb)-1]) { 
@@ -128,8 +140,6 @@ module keytipcut(gamma, negrot, yfactor) {
 			cube([bsx,bs,bs], center=true);
 }
 
-
-
 rotate([270,180,0])
 union() {
 	difference() {
@@ -142,9 +152,9 @@ union() {
 		/* Make the lower cut in the key tip */
 		keytipcut(45,true,0);
 
-                if (!blank) {
-                    keycombcuts();
-                }
+        if (!blank) {
+            keycombcuts();
+        }
 	}
 
 	// Key handle connector
@@ -157,8 +167,8 @@ union() {
 	cube([khx,khy,khz]);
 
 	// Branding
-   translate([khx+0.1,-khy/4 + 0.1*khy,kl/2+khcz+0.4*khz])
+	translate([khx+0.1,-khy/4 + 0.1*khy,kl/2+khcz+0.4*khz])
 	resize([0,0.8*khy,0],auto=[false,true,true],center=true)
 	rotate([90,0,90])
-	branding(0.2);
+	branding(bh);
 }

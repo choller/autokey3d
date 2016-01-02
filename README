@@ -19,6 +19,11 @@ python AutoKey.py --bumpkey --profile profiles/ABUS-AB95.svg --definition defini
 
 Once OpenSCAD has started, you can Preview/Render/Export the STL as desired.
 
+
+Instead of using the --bumpkey parameter, you can also specify --blank for
+creating a blank instead, or use --key 1,2,3,4,5,6 to create a key with
+the specified combination.
+
 === Profiles ===
 
 In the profiles/ subdirectory, you can find SVG traces created from photos for

@@ -158,8 +158,10 @@ def main(argv=None):
             f.write("blank = false;\n")
             
         if opts.key:
-            f.write("combination = [%s]\n" % opts.key)
-            
+            f.write("combination = [%s];\n" % opts.key)
+        else:
+            f.write("combination = 0;\n")
+
     subprocess.check_call(["inkscape", "-E", os.path.join(BASE_DIR, "profile.eps"), opts.profile])
     subprocess.check_call(["pstoedit", "-dt", "-f", "dxf:-polyaslines", os.path.join(BASE_DIR, "profile.eps"), os.path.join(BASE_DIR, "profile.dxf")], stderr=DEVNULL)
     subprocess.check_call(["/usr/bin/openscad", os.path.join(BASE_DIR, "key.scad") ])

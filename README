@@ -3,6 +3,8 @@
 AutoKey (formerly known as PhotoBump) is a software to create 3D models for
 key blanks, bumpkeys and regular keys.
 
+This software was first presented and demonstrated at LockCon 2014, Sneek, NL.
+
 === Requirements ===
 
 - OpenSCAD (a version > 2014.03 taken from GIT or daily snapshots is recommended)

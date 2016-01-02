@@ -1,4 +1,4 @@
-== General ==
+# Profile data
 
 This directory contains profile data in SVG format.
 
@@ -22,7 +22,7 @@ X-Y.svg for the profile and X-Y.tol for the respective tolerance file, where
 X is the brand name (e.g. ABUS)
 Y is the profile name (e.g. AB1) if known, or the lock type if unknown.
 
-== List of Profiles ==
+## List of supported profiles
 
 ABUS        - AB1     - ABUS default profile (e.g. C83)
 ABUS        - AB95    - Default profile for the ABUS E20

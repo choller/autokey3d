@@ -9,9 +9,9 @@ khcxoff = 0.2; // Adjustment of the key handle connector in x-direction
 
 $fn = 100;
 
-addaspace = bumpkey ? 1.5 : 0.0;
-addplatspace = bumpkey ? 0.4 : 0.0;
-addcutdepth = bumpkey ? 0.2 : 0.0;
+addaspace = bumpkey ? bump_addaspace : 0.0;
+addplatspace = bumpkey ? bump_addplatspace : 0.0;
+addcutdepth = bumpkey ? bump_addcutdepth : 0.0;
 keycomb = bumpkey ? [0,0,0,0,0,0] : combination;
 
 module keycombcuts() {

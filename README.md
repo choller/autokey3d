@@ -13,6 +13,8 @@ Written by Christian Holler (:decoder). For questions, send an email to:
 
 The software was first presented and demonstrated at LockCon 2014, Sneek, NL.
 
+The recorded talk is available here: https://www.youtube.com/watch?v=3pSa0pslxpU
+
 ## Requirements
 
 * OpenSCAD (a version > 2014.03 taken from GIT or daily snapshots is recommended)

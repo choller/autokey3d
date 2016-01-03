@@ -22,6 +22,17 @@ The format of the files should be:
 `X` is the brand name (e.g. ABUS)
 `Y` is the profile name (e.g. AB1) if known, or the lock type if unknown.
 
+## Extracting your own profile
+
+Right now, the extraction process (from picture to profile trace), is still
+manual. In some cases, an automated thresholding can work but I had many cases
+where this did not work and created artifacts or other inaccuracy in the
+resulting profile. Therefore, I recommend to do a little manual work in your
+favorite image editing software. You can see an brief example of the process 
+as part of my talk, using GIMP and Inkscape:
+
+https://www.youtube.com/watch?v=3pSa0pslxpU#t=10m40s
+
 ## List of supported profiles
 
 ```

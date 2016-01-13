@@ -52,6 +52,7 @@ def main(argv=None):
     parser.add_argument("--definition", dest="definition", required=True, help="Path to the definition file to use", metavar="FILE")
     parser.add_argument("--profile", dest="profile", required=True, help="Path to the profile file to use", metavar="FILE")
     parser.add_argument("--tolerance", dest="tol", required=False, help="Override tolerance with specified value", metavar="TOL")
+    parser.add_argument("--branding-model", dest="branding_model", required=False, help="Override model used in branding text", metavar="MODEL")
 
     parser.add_argument('args', nargs=argparse.REMAINDER)
 
@@ -80,6 +81,8 @@ def main(argv=None):
     with open(os.path.join(BRAND_DIR, "branding-template.svg"), 'r') as f:
         branding = f.read()
     model = os.path.basename(opts.definition).replace(".scad", "")
+    if opts.branding_model:
+      model = opts.branding_model
 
     # Read system definition
     with open(opts.definition, 'r') as f:

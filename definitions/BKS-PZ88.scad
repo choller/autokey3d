@@ -21,6 +21,13 @@ cutangle = 92;
 // Plateau spacing of the cut
 platspace = 0.8;
 
-
 bump_addplatspace = 0.6;
 bump_addcutdepth = 0.1;
+
+/* The following settings might result in a better bumpkey */
+
+// Cut angle
+//cutangle = 100;
+
+//bump_addplatspace = -0.3;
+//bump_addcutdepth = 0.0;

@@ -3,22 +3,22 @@ kl=27;
 
 // Combination cuts
 
-/* This dataset does not include cutting information */
+/* Dataset guessed based on key, might be inaccurate (UNTESTED) */
 
 // Shoulder
-//aspace = X;
+aspace = 3.65;
 
 // Pin distance
-//pinspace = X;
+pinspace = 3.65;
 
-// Highest cut
-//hcut = ph - 2*tol - X;
+// Highest cut (13)
+hcut = 9.25 - 4.7; // Highest pin - (Profile bottom to core bottom distance)
 
  // Cut spacing
-//cutspace = X;
+cutspace = 0.35;
 
 // Cut angle
-//cutangle = X;
+cutangle = 112;
 
 // Plateau spacing of the cut
-//platspace = X;
+platspace = 0.0;

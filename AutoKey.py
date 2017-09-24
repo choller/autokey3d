@@ -143,12 +143,6 @@ def main(argv=None):
     # Compose real settings
     with open(os.path.join(BASE_DIR, "settings.scad"), 'w') as f:
         f.write("/* AUTO-GENERATED FILE - DO NOT EDIT */\n\n")
-        f.write(baseSettings)
-        f.write("\n")
-        f.write(profile_definition)
-        f.write("\n")
-        f.write(definition)
-        f.write("\n")
         
         if opts.bumpkey:
             f.write("bumpkey = true;\n")
@@ -164,6 +158,14 @@ def main(argv=None):
             f.write("combination = [%s];\n" % opts.key)
         else:
             f.write("combination = 0;\n")
+
+        f.write(profile_definition)
+        f.write("\n")
+        f.write(definition)
+        f.write("\n")
+
+        f.write(baseSettings)
+        f.write("\n")
 
     subprocess.check_call(["inkscape", "-E", os.path.join(BASE_DIR, "profile.eps"), opts.profile])
     subprocess.check_call(["pstoedit", "-dt", "-f", "dxf:-polyaslines", os.path.join(BASE_DIR, "profile.eps"), os.path.join(BASE_DIR, "profile.dxf")], stderr=DEVNULL)

@@ -10,9 +10,9 @@ bump_addcutdepth = 0.2; // How much additional cut depth
  */
 
 // Key handle data
-khx=5;
-khy=20;
-khz=20;
+khx= thin_handle ? 2.5 : 5;
+khy= thin_handle ? 25 : 20;
+khz= thin_handle ? 12 : 20;
 
 // Branding on the key
 bh=0.2;

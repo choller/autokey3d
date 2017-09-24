@@ -6,8 +6,10 @@ $fn = 100;
 // profile or system definitions directly in the program, e.g.:
 //
 //cutangle = 100;
+//bumpkey = 1;
 //platspace = 0.0;
 //bump_addcutdepth = 0.0;
+//bump_addaspace = 0.0;
 
 // Do not change anything below unless you know what you are doing
 
@@ -144,22 +146,25 @@ union() {
 		/* Make the lower cut in the key tip */
 		keytipcut(45,true,0);
 
-        if (!blank) {
-            keycombcuts();
-        }
+        	if (!blank) {
+		    keycombcuts();
+		}
 	}
+	khcyo = -(khcy-ph)/2;
+	khyo = khcyo - (khy-khcy)/2;
 
 	// Key handle connector
-	translate([khcxoff,-(khcy-ph)/2,kl/2]) //Add +0.1 to z here to check that handle is exact
+	translate([khcxoff,khcyo,kl/2]) //Add +0.1 to z here to check that handle is exact
 	cube([khcx,khcy,khcz]);
 
    
 	// Key handle
-	translate([0,-khy/4,kl/2+khcz]) //Add +0.1 to z here to check that handle is exact
+	translate([khcxoff,khyo,kl/2+khcz]) //Add +0.1 to z here to check that handle is exact
 	cube([khx,khy,khz]);
 
 	// Branding
-	translate([khx+0.1,-khy/4 + 0.1*khy,kl/2+khcz+0.4*khz])
+	khzb = thin_handle ? khz*0.1 : khz*0.5;
+	translate([khcxoff+khx+0.1,khyo + 0.1*khy,kl/2+khcz+khzb])
 	resize([0,0.8*khy,0],auto=[false,true,true],center=true)
 	rotate([90,0,90])
 	branding(bh);

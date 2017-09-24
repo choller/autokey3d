@@ -53,6 +53,7 @@ def main(argv=None):
     parser.add_argument("--profile", dest="profile", required=True, help="Path to the profile file to use", metavar="FILE")
     parser.add_argument("--tolerance", dest="tol", required=False, help="Override tolerance with specified value", metavar="TOL")
     parser.add_argument("--branding-model", dest="branding_model", required=False, help="Override model used in branding text", metavar="MODEL")
+    parser.add_argument("--thin-handle", dest="thin_handle", action='store_true', required=False, help="Use a thin handle suitable for impressioning grips")
 
     parser.add_argument('args', nargs=argparse.REMAINDER)
 
@@ -158,6 +159,11 @@ def main(argv=None):
             f.write("combination = [%s];\n" % opts.key)
         else:
             f.write("combination = 0;\n")
+
+        if opts.thin_handle:
+            f.write("thin_handle = true;\n")
+        else:
+            f.write("thin_handle = false;\n")
 
         f.write(profile_definition)
         f.write("\n")

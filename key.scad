@@ -40,7 +40,8 @@ module keycombcut(cutnum, cutlevel) {
    translate([0, addcutdepth + hcut-(cutlevel*cutspace), 0])
    translate([0,0,(aspace + addaspace + cutnum*pinspace)*-1])  // Pin position
    translate([0,-cutdim/2 + tol, -cutdim/2 + kl/2]) // Center the cutter at 0. We need to add the tolerance to reach the lower end of the thinned key.
-
+   
+   translate([0,0,platspace/2]) // Center the original plateau over the pin
    hull() {
    translate([0, ycorrect, zcorrect])
      rotate([-rotangle1,0,0])

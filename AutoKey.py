@@ -22,7 +22,7 @@ import shutil
 import subprocess
 import re
 
-__version__ = 0.1
+__version__ = 1.1
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 BRAND_DIR = os.path.join(BASE_DIR, "branding")
@@ -89,10 +89,15 @@ def main(argv=None):
     with open(opts.definition, 'r') as f:
         definition = f.read()
 
+    need_default_keycombcuts = not "module keycombcuts()" in definition
+    need_default_keytipcuts = not "module keytipcuts()" in definition
+
     # Read profile definition
     profile_definition_file = "%s.def" % opts.profile.replace(".svg", "")
     with open(profile_definition_file, 'r') as f:
         profile_definition = f.read()
+
+    khcx_override = "khcx" in profile_definition
 
     def_tol = None
     def_kl = None
@@ -140,6 +145,9 @@ def main(argv=None):
     # Read base settings
     with open(os.path.join(BASE_DIR, "base-settings.scad"), 'r') as f:
         baseSettings = f.read()
+
+    if khcx_override:
+        baseSettings = baseSettings.replace("khcx=", "//khcx=")
     
     # Compose real settings
     with open(os.path.join(BASE_DIR, "settings.scad"), 'w') as f:
@@ -172,6 +180,14 @@ def main(argv=None):
 
         f.write(baseSettings)
         f.write("\n")
+
+        if need_default_keytipcuts:
+            f.write("include <includes/default-keytipcuts.scad>;")
+            f.write("\n")
+
+        if need_default_keycombcuts:
+            f.write("include <includes/default-keycombcuts.scad>;")
+            f.write("\n")
 
     subprocess.check_call(["inkscape", "-E", os.path.join(BASE_DIR, "profile.eps"), opts.profile])
     subprocess.check_call(["pstoedit", "-dt", "-f", "dxf:-polyaslines", os.path.join(BASE_DIR, "profile.eps"), os.path.join(BASE_DIR, "profile.dxf")], stderr=DEVNULL)

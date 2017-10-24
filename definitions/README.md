@@ -26,3 +26,18 @@ the total key blank height and use the result.
 `(**)` Some systems use unsupported alternating cut depths. If the alternation
 isn't large though (e.g. some systems alternate by 0.05mm) then using the mean
 of the two works well.
+
+## Experimental default implementation override
+
+Definitions can implement the following two modules to override the default
+implementations:
+
+```
+module keytipcuts  - Cut the tip of the key
+module keycombcuts - Cut the combination into the key
+```
+
+The default implementations used can be found in the include/ directory. They
+are automatically included if your definition does not implement the respective
+module. For an example on how to reimplement these modules, take a look at the
+`ABUS-EC.scad` definition file.

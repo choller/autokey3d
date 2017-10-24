@@ -51,3 +51,13 @@ pin/shoulder distances, key cut heights and angles. For bump keys, it is
 possible to deviate from the regular system definitions for better results.
 
 Also see definitions/README for a more detailed documentation.
+
+## Known Issues
+
+### Preview
+
+Using "Preview" in OpenSCAD will most likely give you a glitched model. To
+check the model, use "Render" (which takes longer, but should produce a
+glitch-free view). For faster rendering, you can lower the $fn value in
+key.scad to 50 or 10, but make sure to set it back to 100 before doing final
+model rendering. Otherwise accuracy of the rendered model might be insufficient.

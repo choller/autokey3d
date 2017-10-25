@@ -26,6 +26,9 @@ aspaces = [4.6, 3.05, 4.6, 3.05];
 // Pin distance
 pinspace = 3.1;
 
+// Distance pin cut to edge of blank
+px = 1.73;
+
 // Lowest cut
 lcut = 0.2;
 
@@ -41,61 +44,42 @@ pcutspace = 0.95;
 // Cut angle (angle of cutter, W105)
 cutangle = 90;
 
+// Cutter diameter, W105
+de = 6;
+
 // Plateau spacing of the cut (tip diameter of cutter, W105)
 platspace = 0.7;
 
-module dimplecut(cutnum, cutlevel, axis) {
-    gamma = (360-2*cutangle) / 4; // Ramp angle for making the cutter
-    lcutter = 10; // Length of cutter shaft
-    kt = 2.88; // Key thickness :/ ?
-    
-    px = 1.73; // Distance pin cut to edge of blank
-    de = 6; // Cutter diameter, W105
-    
-    h = (de - platspace)/2 / sin(gamma) * sin(90-gamma);
-    
-    aspace = aspaces[axis];
-    
-    ocs = (axis == 1 || axis == 2) ? 0 : 1; // on center side?
-    neg = (ocs == 1) ? 1 : -1;
-    mx = (ocs == 1) ? 0 : 1;
-    vtrans = axis > 1 ? -ph + 2*px : 0;
-    passive = axis % 2 ? 1 : 0;
-    
-    zcorr = 0.1; // Compensate dimensional errors in x/y
-                 // This value must be chosen such that the cutters touch
-                 // the blank without any cut depth.
+kt = 2.88; // Key thickness
 
-    cutdepth = passive ? cutlevel * pcutspace : lcut + (cutlevel-1)*cutspace;
-    
-    translate([ - cutdepth * neg,0,0]) // comment this out for calibration
-    translate([ocs*zcorr,0,0])
-    translate([0,vtrans,0])
-    translate([neg*(h/2) + ocs*kt,ph-px,kl/2 - aspace - cutnum*pinspace])
-    mirror([mx,0,0])
-    rotate([0,90,0])
-    union() {
-        cylinder(h, platspace/2, de/2, center=true);
-        translate([0,0,lcutter/2 + h/2])
-        cylinder(lcutter,de/2,de/2,center=true);
-    }
+zcorr = 0.1; // Compensate dimensional errors in x/y
+             // This value must be chosen such that the cutters touch
+             // the blank without any cut depth when cutdepth is 0.
+
+include <includes/dimplecut.scad>;
+
+module dimplecut_ec(cutnum, cutlevel, axis, passive=false) {
+     loc_lcut = passive ? pcutspace : lcut;
+     loc_cutspace = passive ? 0 : cutspace;
+     dimplecut(kt, aspaces[axis], pinspace, loc_lcut, loc_cutspace, cutangle,
+                cutnum, cutlevel, axis, px, platspace, de, zcorr);
 }
 
 module keycombcuts() {
    for (i = [0:5]) { 
-     dimplecut(i, keycomb[i], 0);
+     dimplecut_ec(i, keycomb[i], 0);
    }
    
    for (i = [6:12]) { 
-     dimplecut(i-6, keycomb[i], 1);
+     dimplecut_ec(i-6, keycomb[i], 1, true);
    }
 
    for (i = [13:18]) { 
-     dimplecut(i-13, keycomb[i], 2);
+     dimplecut_ec(i-13, keycomb[i], 2);
    }
 
    for (i = [19:25]) { 
-     dimplecut(i-19, keycomb[i], 3);
+     dimplecut_ec(i-19, keycomb[i], 3, true);
    }
 }
 

@@ -5,6 +5,12 @@
 AutoKey3D (formerly known as PhotoBump) is a software to create 3D models for
 key blanks, bumpkeys and regular keys.
 
+## License
+
+Please note that AutoKey3D is released under a *non-commercial* license (CC BY-NC-SA 4.0).
+
+See the LICENSE file for the exact license text.
+
 ### About
 
 Written by Christian Holler (:decoder). For questions, send an email to:

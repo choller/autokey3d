@@ -1,4 +1,4 @@
-// This definition is also valid for: ABUS A90
+// This definition is also valid for: AB A90
 
 // Key length
 kl=27;

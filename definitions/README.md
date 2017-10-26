@@ -40,4 +40,4 @@ module keycombcuts - Cut the combination into the key
 The default implementations used can be found in the include/ directory. They
 are automatically included if your definition does not implement the respective
 module. For an example on how to reimplement these modules, take a look at the
-`ABUS-EC.scad` definition file.
+`AB-EC.scad` definition file.

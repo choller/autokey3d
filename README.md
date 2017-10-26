@@ -33,7 +33,7 @@ The recorded talk is available here: https://www.youtube.com/watch?v=3pSa0pslxpU
 In order to create the 3D model for the bump key that was used in my video,
 you can run the following command:
 
-`python AutoKey.py --bumpkey --profile profiles/ABUS-AB95.svg --definition definitions/ABUS-E20.scad`
+`python AutoKey.py --bumpkey --profile profiles/AB-AB95.svg --definition definitions/AB-E20.scad`
 
 Once OpenSCAD has started, you can Preview/Render/Export the STL as desired.
 

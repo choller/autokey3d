@@ -19,7 +19,7 @@ The format of the files should be:
 
 `X-Y.svg` for the profile and `X-Y.def` for the respective definition file.
 
-`X` is the brand name (e.g. ABUS)
+`X` is the brand name abbreviation (e.g. AB)
 `Y` is the profile name (e.g. AB1) if known, or the lock type if unknown.
 
 ## Extracting your own profile
@@ -36,11 +36,10 @@ https://www.youtube.com/watch?v=3pSa0pslxpU#t=10m40s
 ## List of supported profiles
 
 ```
-ABUS        - AB1     - ABUS default profile (e.g. C83)
-ABUS        - AB95    - Default profile for the ABUS E20
-ABUS        - TS5000  - Profile for the ABUS TS5000 and XP1 locks
-ABUS        - V14     - Example profile taken from an ABUS V14
-BKS         - BK1     - BKS default profile (e.g. PZ88)
-CES         - CE41    - Newer CES default profile (e.g. CES 810)
-IKON        - RZL3    - Example profile taken from an IKON SK6
+AB         - AB1     - AB default profile (e.g. C83)
+AB         - AB95    - Default profile for the AB E20
+AB         - TS5000  - Profile for the AB TS5000 and XP1 locks
+AB         - V14     - Example profile taken from an AB V14
+BK         - BK1     - BK default profile (e.g. PZ88)
+CE         - CE41    - Newer CE default profile (e.g. CE 810)
 ```

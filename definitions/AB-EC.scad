@@ -56,6 +56,8 @@ zcorr = 0.1; // Compensate dimensional errors in x/y
              // This value must be chosen such that the cutters touch
              // the blank without any cut depth when cutdepth is 0.
 
+phk = ph - 2*tol;
+
 include <includes/dimplecut.scad>;
 
 module dimplecut_ec(cutnum, cutlevel, axis, passive=false) {
@@ -93,16 +95,16 @@ module keytipthin() {
     translate([0,-bs/2 + thinw,-bs/2 - kl/2 + thinl])
     cube([bs,bs,bs], center=true);
     
-    translate([0,bs/2 - thinw + ph,-bs/2 - kl/2 + thinl])
+    translate([0,bs/2 - thinw + phk,-bs/2 - kl/2 + thinl])
     cube([bs,bs,bs], center=true);
     
-    translate([0,-bs/2-ph/2+thinw,-bs/2 - kl/2 + thinl])
+    translate([0,-bs/2-phk/2+thinw,-bs/2 - kl/2 + thinl])
     translate([0,-bs/2,bs/2])
     rotate([gamma,0,0])
     translate([0,bs/2,-bs/2])
     cube([bs,bs,bs], center=true);
     
-    translate([0,-bs/2+sqrt(bs*bs)+ph-thinw,-bs/2 - kl/2 + thinl])
+    translate([0,-bs/2+sqrt(bs*bs)+phk-thinw,-bs/2 - kl/2 + thinl])
     translate([0,-bs/2,bs/2])
     rotate([gamma,0,0])
     translate([0,bs/2,-bs/2])
@@ -123,7 +125,7 @@ module keytipcuts() {
         translate([-bs/2,0,-bs/2])
         cube([bs,bs,bs], center=true);
     
-        translate([-bs/2,ph-w,ly])
+        translate([-bs/2,phk-w,ly])
         translate([bs+pth,0,0])
         translate([0,bs/2,-kl/2 -bs/2])
         translate([-bs/2,0,bs/2])

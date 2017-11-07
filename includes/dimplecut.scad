@@ -15,6 +15,8 @@ module dimplecut(
     d2, /* Upper diameter of the cutter */
     zcorr, /* Correction value in cut direction */
     ) {
+
+    phk = ph - 2*tol;
         
     gamma = (360-2*cutangle) / 4; // Ramp angle for making the cutter
     lcutter = 10; // Length of cutter shaft
@@ -24,7 +26,7 @@ module dimplecut(
     ocs = (axis == 1 || axis == 2) ? 0 : 1; // on center side?
     neg = (ocs == 1) ? 1 : -1;
     mx = (ocs == 1) ? 0 : 1;
-    vtrans = axis > 1 ? -ph + 2*px : 0;
+    vtrans = axis > 1 ? -phk + 2*px : 0;
     passive = axis % 2 ? 1 : 0;
     
     cutdepth = cutlevel > 0 ? lcut + (cutlevel-1)*cutspace : 0;
@@ -32,7 +34,7 @@ module dimplecut(
     translate([ - cutdepth * neg,0,0]) // comment this out for calibration
     translate([ocs*zcorr,0,0])
     translate([0,vtrans,0])
-    translate([neg*(h/2) + ocs*kt,ph-px,kl/2 - aspace - cutnum*pinspace])
+    translate([neg*(h/2) + ocs*kt,phk-px,kl/2 - aspace - cutnum*pinspace])
     mirror([mx,0,0])
     rotate([0,90,0])
     union() {

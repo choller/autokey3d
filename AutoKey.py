@@ -40,9 +40,9 @@ def main(argv=None):
 
     # setup argparser
     parser = argparse.ArgumentParser()
-    
+
     parser.add_argument('--version', action='version', version=program_version_string)
-    
+
     # Actions
     parser.add_argument("--bumpkey", dest="bumpkey", action='store_true', help="Create a bumpkey")
     parser.add_argument("--blank", dest="blank", action='store_true', help="Create a key blank")
@@ -63,10 +63,10 @@ def main(argv=None):
 
     # process options
     opts = parser.parse_args(argv)
-    
+
     # Check that one action is specified
     actions = [ "bumpkey", "blank", "key" ]
-    
+
     haveAction = False
     for action in actions:
         if getattr(opts, action):
@@ -77,7 +77,7 @@ def main(argv=None):
     if not haveAction:
         print("Error: Must specify at least one of these actions: %s" % " ".join(actions), file=sys.stderr)
         return 2
-    
+
     # Do the key branding
     with open(os.path.join(BRAND_DIR, "branding-template.svg"), 'r') as f:
         branding = f.read()
@@ -136,33 +136,33 @@ def main(argv=None):
     branding = branding.replace("%tol%", "%s" % def_tol)
     with open(os.path.join(BRAND_DIR, "branding.svg"), 'w') as f:
         f.write(branding)
-    
+
     DEVNULL = open(os.devnull, 'w')
-    
+
     subprocess.check_call(["inkscape", "-E", os.path.join(BRAND_DIR, "branding.eps"), os.path.join(BRAND_DIR, "branding.svg"),])
     subprocess.check_call(["pstoedit", "-dt", "-f", "dxf:-polyaslines", os.path.join(BRAND_DIR, "branding.eps"), os.path.join(BRAND_DIR, "branding.dxf")], stderr=DEVNULL)
-    
+
     # Read base settings
     with open(os.path.join(BASE_DIR, "base-settings.scad"), 'r') as f:
         baseSettings = f.read()
 
     if khcx_override:
         baseSettings = baseSettings.replace("khcx=", "//khcx=")
-    
+
     # Compose real settings
     with open(os.path.join(BASE_DIR, "settings.scad"), 'w') as f:
         f.write("/* AUTO-GENERATED FILE - DO NOT EDIT */\n\n")
-        
+
         if opts.bumpkey:
             f.write("bumpkey = true;\n")
         else:
             f.write("bumpkey = false;\n")
-        
+
         if opts.blank:
             f.write("blank = true;\n")
         else:
             f.write("blank = false;\n")
-            
+
         if opts.key:
             f.write("combination = [%s];\n" % opts.key)
         else:

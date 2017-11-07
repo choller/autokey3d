@@ -83,14 +83,15 @@ module profile() {
 rotate([270,180,0])
 union() {
 	difference() {
-		/* Create the uncut blank */
-		resize([0,0,kl]) profile();
+        /* Create the uncut blank and make sure it is zero-aligned with y-axis */
+        translate([-tol,0,0])
+        resize([0,0,kl]) profile();
 
 		/* Cut the key tip */
 		keytipcuts();
 
         if (!blank) {
-		    keycombcuts();
+            keycombcuts();
 		}
 	}
 	khcyo = -(khcy-ph)/2;
@@ -99,7 +100,7 @@ union() {
 	// Key handle connector
 	translate([khcxoff,khcyo,kl/2]) //Add +0.1 to z here to check that handle is exact
 	cube([khcx,khcy,khcz]);
-   
+
 	// Key handle
 	translate([khcxoff,khyo,kl/2+khcz]) //Add +0.1 to z here to check that handle is exact
 	cube([khx,khy,khz]);

@@ -19,6 +19,7 @@ addcutdepth = bumpkey ? bump_addcutdepth : 0.0;
 
 keycomb = bumpkey ? [0,0,0,0,0,0] : combination;
 
+lasercut = false;
 
 module branding(h) {
   linear_extrude(height=h,center=true)
@@ -92,6 +93,9 @@ union() {
 
         if (!blank) {
             keycombcuts();
+            if (lasercut) {
+              keycombcuts_laser();
+            }
 		}
 	}
 	khcyo = -(khcy-ph)/2;

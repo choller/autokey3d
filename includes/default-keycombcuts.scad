@@ -1,4 +1,5 @@
-module keycombcut(cutnum, cutlevel) {
+module keycombcut(cutnum, cutlevel, lcut1=false, lcut2=false) {
+   lcut = lcut1 || lcut2;
    cutdim = 10;
    d = cutdim / sqrt(2); // Diagonal of the cutting rect
 
@@ -21,19 +22,41 @@ module keycombcut(cutnum, cutlevel) {
    
    translate([0,0,platspace/2]) // Center the original plateau over the pin
    hull() {
-   translate([0, ycorrect, zcorrect])
-     rotate([-rotangle1,0,0])
+   if (!lcut || lcut1) {
+     // Towards handle
+     translate([0, ycorrect, zcorrect])
+       rotate([-rotangle1,0,0])
 	   cube([cutdim,cutdim,cutdim], center=true);
+   }
 
-   translate([0, ycorrect, -zcorrect+cutdim])
-     translate([0,0,-platspace-addplatspace])
-       rotate([rotangle1,0,0])
+   if (!lcut || lcut2) {
+     // Towards tip of key
+     translate([0, ycorrect, -zcorrect+cutdim])
+       translate([0,0,-platspace-addplatspace])
+         rotate([rotangle1,0,0])
 	     cube([cutdim,cutdim,cutdim], center=true);
+     }
    }
 }
 
 module keycombcuts() {
    for (i = [0:len(keycomb)-1]) { 
      keycombcut(i, keycomb[i]);
+   }
+}
+
+module keycombcuts_laser() {
+   for (i = [0:len(keycomb)-1]) {
+     if (i < len(keycomb)-1) {
+       hull() {
+         keycombcut(i, keycomb[i], false, true);
+         keycombcut(i+1, keycomb[i+1], true, false);
+       }
+     }
+   }
+   hull() {
+     keycombcut(len(keycomb)-1, keycomb[len(keycomb)-1], false, true);
+     translate([0,0,-kl])
+       keycombcut(len(keycomb)-1, keycomb[len(keycomb)-1], false, true);
    }
 }

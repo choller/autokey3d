@@ -21,6 +21,6 @@ module keytipcuts() {
         keytipcut_old(40,false,2.1);
 
         /* Make the lower cut in the key tip */
-        keytipcut_old(45,true,0);
+        keytipcut_old(cutangle/2,true,0);
 }
 

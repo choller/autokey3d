@@ -196,12 +196,12 @@ def isolate(filename, out_filename):
             if (rect_or_mask == 0):         # grabcut with rect
                 bgdmodel = np.zeros((1,65),np.float64)
                 fgdmodel = np.zeros((1,65),np.float64)
-                cv2.grabCut(img2,mask,rect,bgdmodel,fgdmodel,1,cv2.GC_INIT_WITH_RECT)
+                cv2.grabCut(img2,mask,rect,bgdmodel,fgdmodel,5,cv2.GC_INIT_WITH_RECT)
                 rect_or_mask = 1
             elif rect_or_mask == 1:         # grabcut with mask
                 bgdmodel = np.zeros((1,65),np.float64)
                 fgdmodel = np.zeros((1,65),np.float64)
-                cv2.grabCut(img2,mask,rect,bgdmodel,fgdmodel,1,cv2.GC_INIT_WITH_MASK)
+                cv2.grabCut(img2,mask,rect,bgdmodel,fgdmodel,5,cv2.GC_INIT_WITH_MASK)
         elif k == ord('m'):
             cv2.imwrite('tmp.pbm',bwimg)
             subprocess.check_call([

@@ -19,7 +19,9 @@ addcutdepth = bumpkey ? bump_addcutdepth : 0.0;
 
 keycomb = bumpkey ? [0,0,0,0,0,0] : combination;
 
+nohandle = false;
 lasercut = false;
+mark = false;
 
 module branding(h) {
   linear_extrude(height=h,center=true)
@@ -104,15 +106,23 @@ union() {
 	// Key handle connector
 	translate([khcxoff,khcyo,kl/2]) //Add +0.1 to z here to check that handle is exact
 	cube([khcx,khcy,khcz]);
+    
+    if (mark) {
+      translate([khcxoff,khcyo,kl/2])
+      translate([khcx,khcy/2,khcz/2])
+      sphere(r=khcx/4);
+    }
 
-	// Key handle
-	translate([khcxoff,khyo,kl/2+khcz]) //Add +0.1 to z here to check that handle is exact
-	cube([khx,khy,khz]);
+    if (!nohandle) {
+	  // Key handle
+	  translate([khcxoff,khyo,kl/2+khcz]) //Add +0.1 to z here to check that handle is exact
+	  cube([khx,khy,khz]);
 
-	// Branding
-	khzb = thin_handle ? khz*0.1 : khz*0.5;
-	translate([khcxoff+khx+0.1,khyo + 0.1*khy,kl/2+khcz+khzb])
-	resize([0,0.8*khy,0],auto=[false,true,true],center=true)
-	rotate([90,0,90])
-	branding(bh);
+	  // Branding
+	  khzb = thin_handle ? khz*0.1 : khz*0.5 - 1;
+	  translate([khcxoff+khx+0.1,khyo + 0.1*khy,kl/2+khcz+khzb])
+	  resize([0,0.8*khy,0],auto=[false,true,true],center=true)
+	  rotate([90,0,90])
+	  branding(bh);
+    }
 }

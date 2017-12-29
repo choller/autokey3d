@@ -151,11 +151,11 @@ def isolate(filename, out_filename):
         pass
 
     update_out()
-    cv2.createTrackbar( "CT", "Traced Profile", at_ct, 180, update_at_ct )
-    cv2.createTrackbar( "CAT", "Traced Profile", at_cat, 100, update_at_cat )
-    cv2.createTrackbar( "CS", "Traced Profile", at_cs, 100, update_at_cs )
-    cv2.createTrackbar( "LT", "Traced Profile", at_lt, 100, update_at_lt )
-    cv2.createTrackbar( "LRT", "Traced Profile", at_lrt, 100, update_at_lrt )
+    #cv2.createTrackbar( "CT", "Traced Profile", at_ct, 180, update_at_ct )
+    #cv2.createTrackbar( "CAT", "Traced Profile", at_cat, 100, update_at_cat )
+    #cv2.createTrackbar( "CS", "Traced Profile", at_cs, 100, update_at_cs )
+    #cv2.createTrackbar( "LT", "Traced Profile", at_lt, 100, update_at_lt )
+    #cv2.createTrackbar( "LRT", "Traced Profile", at_lrt, 100, update_at_lrt )
 
 
     while(1):
@@ -205,22 +205,23 @@ def isolate(filename, out_filename):
         elif k == ord('m'):
             cv2.imwrite('tmp.pbm',bwimg)
             subprocess.check_call([
-                "autotrace",
+                "potrace",
                 "tmp.pbm",
-                "--background-color", "FFFFFF",
-                "--corner-threshold", str(at_ct),
-                "--line-threshold", str(float(at_lt)/float(10)),
-                "--corner-always-threshold", str(at_cat),
-                "--corner-surround", str(at_cs),
-                "--line-reversion-threshold", str(float(at_lrt)/float(100)),
-                "--output-file", "tmp.svg"
+                "--tight", "-s",
+                "-o", "tmp.svg"
             ])
-            subprocess.check_call(["inkscape", "-b", "white", "-e", "tmp.png", "tmp.svg"])
-            #subprocess.check_call(["potrace", "tmp.pbm", "--tight", "-t", str(at_ct), "-a", str(at_lt), "--svg"])
+            subprocess.check_call(["inkscape", "-h", str(img.shape[0]), "-b", "white", "-e", "tmp.png", "tmp.svg"])
             svg = cv2.imread("tmp.png")
 
             mh = img.shape[0] - svg.shape[0]
             mw = img.shape[1] - svg.shape[1]
+
+            # FIXME: This is only a temporary hack so we don't crash if the
+            # rendered SVG is larger than the original picture.
+            if mh <= 0:
+              mh = 0
+            if mw <= 0:
+              mw = 0
 
             svg = cv2.copyMakeBorder(svg, mh/2, mh/2 + mh % 2, mw/2, mw/2 + mw % 2, cv2.BORDER_CONSTANT, value=(255, 255, 255, 255))
 

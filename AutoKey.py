@@ -50,6 +50,7 @@ DRAW_BG = {'color' : BLACK, 'val' : 0}
 DRAW_FG = {'color' : WHITE, 'val' : 1}
 rect = (0,0,1,1)
 drawing = False         # flag for drawing curves
+draw_lines = False      # flag for drawing lines
 rectangle = False       # flag for drawing rect
 rect_over = False       # flag to check if rect drawn
 rect_or_mask = 100      # flag for selecting rect or mask mode
@@ -57,9 +58,10 @@ value = DRAW_FG         # drawing initialized to FG
 thickness = 3           # brush thickness
 (img,img2,mask) = (None, None, None)
 (at_ct, at_lt, at_cat, at_cs, at_lrt) = (100, 10, 60, 50, 1)
+prev_point = None
 
 def isolate(filename, out_filename):
-    global img,img2,drawing,value,mask,rectangle,rect,rect_or_mask,ix,iy,rect_over
+    global img,img2,drawing,draw_lines,value,mask,rectangle,rect,rect_or_mask,ix,iy,rect_over,prev_point
     # Parts of this code are taken from OpenCV2 grabcut example,
     # licensed under BSD License.
     #
@@ -74,7 +76,7 @@ def isolate(filename, out_filename):
     bwimg = np.zeros(img.shape,np.uint8)
 
     def onmouse(event, x, y, flags, param):
-        global img,img2,drawing,value,mask,rectangle,rect,rect_or_mask,ix,iy,rect_over
+        global img,img2,drawing,draw_lines,value,mask,rectangle,rect,rect_or_mask,ix,iy,rect_over,prev_point
 
         # Draw Rectangle
         if event == cv2.EVENT_RBUTTONDOWN:
@@ -114,6 +116,14 @@ def isolate(filename, out_filename):
                 drawing = False
                 cv2.circle(img,(x,y),thickness,value['color'],-1)
                 cv2.circle(mask,(x,y),thickness,value['val'],-1)
+
+                if draw_lines:
+                    if prev_point is not None:
+                        cv2.line(img,prev_point,(x,y),value['color'],thickness)
+                        cv2.line(mask,prev_point,(x,y),value['val'],thickness)
+                        prev_point = None
+                    else:
+                        prev_point = (x,y)
 
     # input and output windows
     cv2.namedWindow('output')
@@ -169,9 +179,17 @@ def isolate(filename, out_filename):
         elif k == ord('0'): # BG drawing
             print("Mark lock (non-profile) regions with left mouse button.")
             value = DRAW_BG
+            prev_point = None
         elif k == ord('1'): # FG drawing
             print("Mark keyway (profile) regions with left mouse button.")
             value = DRAW_FG
+            prev_point = None
+        elif k == ord('l'): # line mode
+            print("Switched to line mode (p to switch back).")
+            draw_lines = True
+        elif k == ord('p'): # line mode
+            print("Switched to point mode.")
+            draw_lines = False
         elif k == ord('s'): # save image
             cv2.imwrite('grabcut_summary.png',res)
             cv2.imwrite('grabcut_output.png',bwimg)

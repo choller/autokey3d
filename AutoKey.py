@@ -381,6 +381,7 @@ def main(argv=None):
     # Compose real settings
     with open(os.path.join(BASE_DIR, "settings.scad"), 'w') as f:
         f.write("/* AUTO-GENERATED FILE - DO NOT EDIT */\n\n")
+        f.write("include <pre-settings.scad>;\n")
 
         if opts.bumpkey:
             f.write("bumpkey = true;\n")

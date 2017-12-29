@@ -33,7 +33,7 @@ except ImportError:
 inkscape_autotrace_avail = True
 try:
     subprocess.check_call(["inkscape", "--version"])
-    subprocess.check_call(["autotrace", "--version"])
+    subprocess.check_call(["potrace", "--version"])
 except:
     inkscape_autotrace_avail = False
 
@@ -297,7 +297,7 @@ def main(argv=None):
             print("Error: --isolate requires cv2 (python-opencv) and numpy (python-numpy) to be installed.", file=sys.stderr)
             return 2
         elif not inkscape_autotrace_avail:
-            print("Error: --isolate requires inkscape and autotrace to be installed.", file=sys.stderr)
+            print("Error: --isolate requires inkscape and potrace to be installed.", file=sys.stderr)
             return 2
         if os.path.exists(opts.profile):
             print("Error: Refusing to overwrite existing --profile destination file.", file=sys.stderr)

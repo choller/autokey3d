@@ -416,7 +416,13 @@ def main(argv=None):
             f.write("blank = false;\n")
 
         if opts.key:
-            f.write("combination = [%s];\n" % opts.key)
+            combination = opts.key.split(",")
+            for idx in range(0, len(combination)):
+                try:
+                    int(combination[idx])
+                except ValueError:
+                    combination[idx] = '"%s"' % combination[idx]
+            f.write("combination = [%s];\n" % ",".join(combination))
         else:
             f.write("combination = 0;\n")
 

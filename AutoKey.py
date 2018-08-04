@@ -388,7 +388,7 @@ def main(argv=None):
     DEVNULL = open(os.devnull, 'w')
 
     subprocess.check_call(["inkscape", "-E", os.path.join(BRAND_DIR, "branding.eps"), os.path.join(BRAND_DIR, "branding.svg"),])
-    subprocess.check_call(["pstoedit", "-dt", "-f", "dxf:-polyaslines", os.path.join(BRAND_DIR, "branding.eps"), os.path.join(BRAND_DIR, "branding.dxf")], stderr=DEVNULL)
+    subprocess.check_call(["pstoedit", "-nb", "-dt", "-f", "dxf:-polyaslines", os.path.join(BRAND_DIR, "branding.eps"), os.path.join(BRAND_DIR, "branding.dxf")], stderr=DEVNULL)
 
     # Read base settings
     with open(os.path.join(BASE_DIR, "base-settings.scad"), 'r') as f:
@@ -442,7 +442,7 @@ def main(argv=None):
             f.write("\n")
 
     subprocess.check_call(["inkscape", "-E", os.path.join(BASE_DIR, "profile.eps"), opts.profile])
-    subprocess.check_call(["pstoedit", "-dt", "-f", "dxf:-polyaslines", os.path.join(BASE_DIR, "profile.eps"), os.path.join(BASE_DIR, "profile.dxf")], stderr=DEVNULL)
+    subprocess.check_call(["pstoedit", "-nb", "-dt", "-f", "dxf:-polyaslines", os.path.join(BASE_DIR, "profile.eps"), os.path.join(BASE_DIR, "profile.dxf")], stderr=DEVNULL)
     subprocess.check_call(["/usr/bin/openscad", os.path.join(BASE_DIR, "key.scad") ])
 
 

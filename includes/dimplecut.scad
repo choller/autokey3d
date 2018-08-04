@@ -29,7 +29,7 @@ module dimplecut(
     vtrans = axis > 1 ? -phk + 2*px : 0;
     passive = axis % 2 ? 1 : 0;
     
-    cutdepth = cutlevel > 0 ? lcut + (cutlevel-1)*cutspace : 0;
+    cutdepth = cutlevel > 0 ? lcut + (cutlevel-1)*cutspace + addcutdepth : 0;
     
     translate([ - cutdepth * neg,0,0]) // comment this out for calibration
     translate([ocs*zcorr,0,0])

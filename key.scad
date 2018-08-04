@@ -94,10 +94,7 @@ union() {
 		keytipcuts();
 
         if (!blank) {
-            keycombcuts();
-            if (lasercut) {
-              keycombcuts_laser();
-            }
+            keycombcuts(lasercut);
 		}
 	}
 	khcyo = -(khcy-ph)/2;

@@ -344,7 +344,8 @@ def main(argv=None):
     with open(profile_definition_file, 'r') as f:
         profile_definition = f.read()
 
-    khcx_override = "khcx" in profile_definition
+    khcx_override = "khcx=" in profile_definition
+    khcxoff_override = "khcxoff=" in profile_definition
 
     def_tol = None
     def_kl = None
@@ -395,6 +396,9 @@ def main(argv=None):
 
     if khcx_override:
         baseSettings = baseSettings.replace("khcx=", "//khcx=")
+
+    if khcxoff_override:
+        baseSettings = baseSettings.replace("khcxoff=", "//khcxoff=")
 
     # Compose real settings
     with open(os.path.join(BASE_DIR, "settings.scad"), 'w') as f:

@@ -28,4 +28,4 @@ khcx=3;        // This parameter must be adjusted to barely fit all of the
                // It can be overridden by the profile definitions file.
 khcy=ph+1;     // This should always fit, as we know the profile height
 khcz=5;        // This is just the length of the connector
-khcxoff = 0.0; // Adjustment of the key handle connector in x-direction
+khcxoff=0.0;   // Adjustment of the key handle connector in x-direction

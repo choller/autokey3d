@@ -63,7 +63,8 @@ include <includes/dimplecut.scad>;
 module dimplecut_ec(cutnum, cutlevel, axis, passive=false) {
      loc_lcut = passive ? pcutspace : lcut;
      loc_cutspace = passive ? 0 : cutspace;
-     dimplecut(kt, aspaces[axis], pinspace, loc_lcut, loc_cutspace, cutangle,
+     loc_addaspace = passive ? 0 : addaspace;
+     dimplecut(kt, aspaces[axis] + loc_addaspace, pinspace, loc_lcut, loc_cutspace, cutangle,
                 cutnum, cutlevel, axis, px, platspace, de, zcorr);
 }
 

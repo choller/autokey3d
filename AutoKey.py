@@ -57,7 +57,7 @@ rect_or_mask = 100      # flag for selecting rect or mask mode
 value = DRAW_FG         # drawing initialized to FG
 thickness = 3           # brush thickness
 (img,img2,mask) = (None, None, None)
-(at_ct, at_lt, at_cat, at_cs, at_lrt) = (100, 10, 60, 50, 1)
+(at_ct, at_lt, at_cat, at_cs, at_lrt) = (10, 10, 60, 50, 1)
 prev_point = None
 
 def isolate(filename, out_filename):
@@ -161,7 +161,7 @@ def isolate(filename, out_filename):
         pass
 
     update_out()
-    #cv2.createTrackbar( "CT", "Traced Profile", at_ct, 180, update_at_ct )
+    cv2.createTrackbar( "CT", "Traced Profile", at_ct, 10, update_at_ct )
     #cv2.createTrackbar( "CAT", "Traced Profile", at_cat, 100, update_at_cat )
     #cv2.createTrackbar( "CS", "Traced Profile", at_cs, 100, update_at_cs )
     #cv2.createTrackbar( "LT", "Traced Profile", at_lt, 100, update_at_lt )
@@ -249,11 +249,16 @@ def isolate(filename, out_filename):
         blackMask = np.where((mask==1) + (mask==3),255,0).astype('uint8')
         whiteMask = np.where((mask==0) + (mask==2),255,0).astype('uint8')
 
+        kernel = np.ones((at_ct,at_ct),np.uint8)
+        whiteMask = cv2.morphologyEx(whiteMask, cv2.MORPH_CLOSE, kernel)
+
         bwimg = np.zeros(output.shape, np.uint8)
         bwimg[blackMask == 255] = 0
         bwimg[whiteMask == 255] = 255
 
+
         output[whiteMask == 255] = (0,0,255)
+
 
     cv2.destroyAllWindows()
     return

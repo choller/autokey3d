@@ -1,11 +1,7 @@
 // NOTE: This definition expects two combination values per pin, one is the depth,
-// the other one is the rotation. Valid rotation values are (in L, C, R order):
+// the other one is the rotation. Valid rotation values are (in L, C, R order).
 //
-//   * K,B or Q for FORE pins
-//   * M,D or S for AFT pins
-//
-// Example combination with 6 pins: 3,S,5,K,4,Q,2,K,2,Q,0,D
-//   (first and last pin are AFT pins, the rest is FORE)
+// Example combination with 6 pins: 1,C,2,C,4,L,1,L,3,L,5,C
 
 // Key length
 kl=33.2;
@@ -30,7 +26,7 @@ platspace = 0.32;
 
 kt = 2.3; // Key thickness
 
-add_angle = 0;
+add_angle = 0; // Additional rotation angle
 
 include <includes/regularcut.scad>;
 

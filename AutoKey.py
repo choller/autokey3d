@@ -350,6 +350,7 @@ def main(argv=None):
         profile_definition = f.read()
 
     khcx_override = "khcx=" in profile_definition
+    khcz_override = "khcz=" in profile_definition
     khcxoff_override = "khcxoff=" in profile_definition
 
     def_tol = None
@@ -401,6 +402,9 @@ def main(argv=None):
 
     if khcx_override:
         baseSettings = baseSettings.replace("khcx=", "//khcx=")
+
+    if khcz_override:
+        baseSettings = baseSettings.replace("khcz=", "//khcz=")
 
     if khcxoff_override:
         baseSettings = baseSettings.replace("khcxoff=", "//khcxoff=")

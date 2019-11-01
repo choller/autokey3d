@@ -30,6 +30,8 @@ platspace = 0.38;
 
 kt = 2.3; // Key thickness
 
+add_angle = 0; // Additional rotation angle
+
 include <includes/regularcut.scad>;
 
 module keycombcuts() {
@@ -37,17 +39,17 @@ module keycombcuts() {
      rotval = keycomb[i+1];
 
      if (rotval == "K") {
-       keycombcut(i/2, keycomb[i], aspaces[0], false, false, false, -20, kt/2);
+       keycombcut(i/2, keycomb[i], aspaces[0], false, false, false, -20 - add_angle, kt/2);
      } else if (rotval == "B") {
        keycombcut(i/2, keycomb[i], aspaces[0], false, false, false, 0, kt/2);
      } else if (rotval == "Q") {
-       keycombcut(i/2, keycomb[i], aspaces[0], false, false, false, 20, kt/2);
+       keycombcut(i/2, keycomb[i], aspaces[0], false, false, false, 20 + add_angle, kt/2);
      } else if (rotval == "M") {
-       keycombcut(i/2, keycomb[i], aspaces[1], false, false, false, -20, kt/2);
+       keycombcut(i/2, keycomb[i], aspaces[1], false, false, false, -20 - add_angle, kt/2);
      } else if (rotval == "D") {
        keycombcut(i/2, keycomb[i], aspaces[1], false, false, false, 0, kt/2);
      } else if (rotval == "S") {
-       keycombcut(i/2, keycomb[i], aspaces[1], false, false, false, 20, kt/2);
+       keycombcut(i/2, keycomb[i], aspaces[1], false, false, false, 20 + add_angle, kt/2);
      } else {
        assert(false, "Unsupported rotation value");
      }

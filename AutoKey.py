@@ -376,7 +376,7 @@ def main(argv=None):
       sys.exit(1)
 
     if def_tol is None:
-      print("Error: Failed to find key length in system definition file")
+      print("Error: Failed to find key tolerance in system definition file")
       sys.exit(1)
 
     if opts.tol:

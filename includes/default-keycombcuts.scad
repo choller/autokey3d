@@ -1,4 +1,4 @@
-include <includes/regularcut.scad>;
+include <regularcut.scad>;
 
 module keycombcuts(laser=false) {
    for (i = [0:len(keycomb)-1]) { 

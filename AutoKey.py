@@ -291,6 +291,7 @@ def main(argv=None):
     parser.add_argument("--tolerance", dest="tol", required=False, help="Override tolerance with specified value", metavar="TOL")
     parser.add_argument("--branding-model", dest="branding_model", required=False, help="Override model used in branding text", metavar="MODEL")
     parser.add_argument("--thin-handle", dest="thin_handle", action='store_true', required=False, help="Use a thin handle suitable for impressioning grips")
+    parser.add_argument("--match-handle-connector", dest="match_handle_connector", action='store_true', required=False, help="Make the handle same thickness as the connector")
 
     parser.add_argument('args', nargs=argparse.REMAINDER)
 
@@ -413,6 +414,11 @@ def main(argv=None):
     with open(os.path.join(BASE_DIR, "settings.scad"), 'w') as f:
         f.write("/* AUTO-GENERATED FILE - DO NOT EDIT */\n\n")
         f.write("include <pre-settings.scad>;\n")
+
+        if opts.match_handle_connector:
+            f.write("match_handle = true;\n")
+        else:
+            f.write("match_handle = false;\n")
 
         if opts.bumpkey:
             f.write("bumpkey = true;\n")

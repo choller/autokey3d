@@ -46,7 +46,7 @@ the specified combination.
 In the profiles/ subdirectory, you can find SVG traces created from photos for
 certain locks. You can add your own SVG data there if you wish to create a
 model for a profile not supported yet by the software. In addition to the SVG,
-there is always a profile definition file (.def) that contains dimensional
+there is always a profile definition file (.scad) that contains dimensional
 information about the profile (see profiles/README for more information).
 
 ## System Definitions

@@ -346,7 +346,7 @@ def main(argv=None):
     need_default_keytipcuts = not "module keytipcuts()" in definition
 
     # Read profile definition
-    profile_definition_file = "%s.def" % opts.profile.replace(".svg", "")
+    profile_definition_file = "%s.scad" % opts.profile.replace(".svg", "")
     with open(profile_definition_file, 'r') as f:
         profile_definition = f.read()
 

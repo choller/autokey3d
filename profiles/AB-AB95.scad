@@ -7,3 +7,4 @@ ph=8.75;
 
 // Profile is thin, use a smaller key connector here to save some space
 khcx=2.5;
+profile_path = "profiles/AB-AB95.dxf"

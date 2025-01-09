@@ -12,10 +12,10 @@ aspace = 4.42;
 pinspace = 4.0;
 
 // Highest cut
-hcut = ph - 2*tol - 4.45;
+hcut = ph - 2*tol - 4.66;
 
  // Cut spacing
-cutspace = 0.435; // Actually alternating between 0.43/0.44
+cutspace = 0.44;
 
 // Cut angle
 cutangle = 112;

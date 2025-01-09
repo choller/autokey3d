@@ -1,26 +1,63 @@
-<?xml version="1.0" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
- "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
-<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
- width="80.213603pt" height="241.305034pt" viewBox="0 0 80.213603 241.305034"
- preserveAspectRatio="xMidYMid meet">
-<metadata>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.0"
+   width="80.213603pt"
+   height="241.305034pt"
+   viewBox="0 0 80.213603 241.305034"
+   preserveAspectRatio="xMidYMid meet"
+   id="svg8"
+   sodipodi:docname="MD-BIAX.svg"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+  <defs
+     id="defs12" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="3773"
+     inkscape:window-height="2094"
+     id="namedview10"
+     showgrid="false"
+     inkscape:zoom="4.1493672"
+     inkscape:cx="53.475733"
+     inkscape:cy="160.87003"
+     inkscape:window-x="67"
+     inkscape:window-y="38"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg8" />
+  <metadata
+     id="metadata2">
 Created by potrace 1.14, written by Peter Selinger 2001-2017
+<rdf:RDF>
+  <cc:Work
+     rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type
+       rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+  </cc:Work>
+</rdf:RDF>
 </metadata>
-<g transform="translate(-51.102833,259.738693) scale(0.100000,-0.100000)"
-fill="#000000" stroke="none">
-<path d="M785 2590 c-16 -4 -64 -8 -105 -9 -64 -1 -79 -5 -102 -26 -27 -23
--28 -27 -28 -134 l0 -109 39 -34 c22 -18 61 -42 88 -52 52 -21 99 -52 151
--100 46 -42 43 -75 -9 -120 -42 -36 -73 -49 -141 -61 -74 -12 -127 -120 -116
--236 4 -35 14 -57 44 -94 21 -26 49 -51 62 -56 22 -9 28 -32 16 -75 -3 -12
--25 -36 -49 -54 -29 -22 -46 -44 -55 -73 -8 -23 -20 -55 -29 -72 -8 -17 -18
--76 -22 -140 -5 -60 -11 -138 -15 -172 -6 -59 -5 -64 29 -115 19 -29 49 -66
-66 -82 17 -17 31 -35 31 -41 0 -7 7 -27 16 -44 14 -28 17 -72 17 -266 l1 -232
-127 -6 c70 -4 173 -3 229 0 87 5 102 9 111 26 10 17 22 358 24 615 0 71 -1 75
--35 106 -36 33 -90 100 -90 111 0 4 -9 14 -20 23 -11 10 -23 33 -26 52 -6 34
--3 38 58 85 34 28 68 52 73 55 35 18 96 64 129 99 44 45 53 85 55 225 1 61 -2
-71 -25 92 -14 13 -29 24 -35 24 -5 0 -9 5 -9 10 0 6 -11 23 -25 38 -31 34 -31
-55 0 126 14 31 25 67 25 80 0 13 7 29 15 36 8 7 15 17 15 23 0 6 7 18 15 27
-13 14 17 64 22 273 l6 256 -39 6 c-21 3 -48 10 -60 15 -25 10 -387 10 -429 0z"/>
-</g>
+  <g
+     transform="translate(-51.102833,259.738693) scale(0.100000,-0.100000)"
+     fill="#000000"
+     stroke="none"
+     id="g6">
+    <path
+       d="m 785,2590 c -16,-4 -64,-8 -105,-9 -64,-1 -79,-5 -102,-26 -27,-23 -28,-27 -28,-134 v -109 l 39,-34 c 22,-18 61,-42 88,-52 52,-21 99,-52 151,-100 46,-42 43,-75 -9,-120 -42,-36 -73,-49 -141,-61 -74,-12 -127,-120 -116,-236 4,-35 14,-57 44,-94 21,-26 49,-51 62,-56 22,-9 28,-32 16,-75 -3,-12 -25,-36 -49,-54 -29,-22 -46,-44 -55,-73 -8,-23 -20,-55 -29,-72 -8,-17 -18,-76 -22,-140 -5,-60 -11,-138 -15,-172 -6,-59 -5,-64 29,-115 19,-29 49,-66 66,-82 17,-17 31,-35 31,-41 0,-7 7,-27 16,-44 14,-28 17,-72 17,-266 l 1,-232 127,-6 c 70,-4 173,-3 229,0 87,5 102,9 111,26 10,17 22,358 24,615 0,71 -1,75 -35,106 -36,33 -90,100 -90,111 0,4 -9,14 -20,23 -11,10 -23,33 -26,52 -6,34 -3,38 58,85 34,28 68,52 73,55 35,18 96,64 129,99 44,45 53,85 55,225 1,61 -2,71 -25,92 -28.2792,22.928 -62.0511,29.7193 -85.2675,53.925 -31,34 -61.7276,107.4175 -30.7276,178.4175 19.5325,77.7097 72.4261,84.6124 116.9951,131.6575 13,14 17,64 22,273 l 6,256 -39,6 c -21,3 -48,10 -60,15 -25,10 -387,10 -429,0 z"
+       id="path4"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccscccccccccccccccccsccccccccsccccccccccccccc" />
+  </g>
 </svg>

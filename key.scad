@@ -94,7 +94,7 @@ union() {
 		keytipcuts();
 
         if (!blank) {
-            keycombcuts(lasercut);
+            keycombcuts(lasercut, realdim);
 		}
 	}
 	khcyo = -(khcy-ph)/2;

@@ -221,14 +221,15 @@ def isolate(filename, out_filename):
                 fgdmodel = np.zeros((1,65),np.float64)
                 cv2.grabCut(img2,mask,rect,bgdmodel,fgdmodel,5,cv2.GC_INIT_WITH_MASK)
         elif k == ord('m'):
-            cv2.imwrite('tmp.pbm',bwimg)
+            # Write 1 channel
+            cv2.imwrite('tmp.pbm',bwimg[:, :, 1])
             subprocess.check_call([
                 "potrace",
                 "tmp.pbm",
                 "--tight", "-s",
                 "-o", "tmp.svg"
             ])
-            subprocess.check_call(["inkscape", "-h", str(img.shape[0]), "-b", "white", "-e", "tmp.png", "tmp.svg"])
+            subprocess.check_call(["inkscape", "-h", str(img.shape[0]), "-b", "white", "--export-type", "png", "--export-filename", "tmp.png", "tmp.svg"])
             svg = cv2.imread("tmp.png")
 
             mh = img.shape[0] - svg.shape[0]
@@ -241,7 +242,7 @@ def isolate(filename, out_filename):
             if mw <= 0:
               mw = 0
 
-            svg = cv2.copyMakeBorder(svg, mh/2, mh/2 + mh % 2, mw/2, mw/2 + mw % 2, cv2.BORDER_CONSTANT, value=(255, 255, 255, 255))
+            svg = cv2.copyMakeBorder(svg, int(mh/2), int(mh/2 + mh % 2), int(mw/2), int(mw/2 + mw % 2), cv2.BORDER_CONSTANT, value=(255, 255, 255, 255))
 
         mask2 = np.where((mask==1) + (mask==3),255,0).astype('uint8')
         output = cv2.bitwise_and(img2,img2,mask=mask2)
@@ -261,6 +262,15 @@ def isolate(filename, out_filename):
 
 
     cv2.destroyAllWindows()
+    # Remove tmp file, that should be moved in another location...
+    try:
+        os.remove("tmp.pbm")
+        os.remove("tmp.png")
+        os.remove("tmp.svg")
+        os.remove("grabcut_output.png")
+        os.remove("grabcut_summary.png")
+    except OSError:
+        pass
     return
 
 def main(argv=None):
@@ -292,6 +302,10 @@ def main(argv=None):
     parser.add_argument("--branding-model", dest="branding_model", required=False, help="Override model used in branding text", metavar="MODEL")
     parser.add_argument("--thin-handle", dest="thin_handle", action='store_true', required=False, help="Use a thin handle suitable for impressioning grips")
     parser.add_argument("--match-handle-connector", dest="match_handle_connector", action='store_true', required=False, help="Make the handle same thickness as the connector")
+
+    # Outname
+    parser.add_argument("--refinname", dest="refinname", action='store_true', required=False, help="Add the profile/description/keys in filename like key-AB95-E20-12345.stl")
+    parser.add_argument("--output", dest="output", required=False, help="Set the output name", metavar="FILE")
 
     parser.add_argument('args', nargs=argparse.REMAINDER)
 
@@ -359,14 +373,14 @@ def main(argv=None):
 
     # Look for length in system definition for branding
     for line in definition.splitlines():
-        m = re.match("\s*kl\s*=\s*([\d\.]+)\s*;", line)
+        m = re.match(r"\s*kl\s*=\s*([\d\.]+)\s*;", line)
         if m:
           def_kl = m.group(1)
           next
 
     # Look for tolerance in profile definition for branding
     for idx,line in enumerate(profile_definition.splitlines()):
-        m = re.match("\s*tol\s*=\s*([\d\.]+)\s*;", line)
+        m = re.match(r"\s*tol\s*=\s*([\d\.]+)\s*;", line)
         if m:
           def_tol = m.group(1)
           def_tol_idx = idx
@@ -389,13 +403,22 @@ def main(argv=None):
     branding = branding.replace("%model%", model)
     branding = branding.replace("%length%", "%s" % def_kl)
     branding = branding.replace("%tol%", "%s" % def_tol)
+    if opts.bumpkey:
+        branding = branding.replace("%code%", "%s" % "bumpkey")
+    elif opts.blank:
+        branding = branding.replace("%code%", "%s" % "blank")
+    elif opts.key:
+        branding = branding.replace("%code%", "%s" % (opts.key if opts.key else "NA"))
+    else:
+        branding = branding.replace("%code%", "%s" % "NA")
+
     with open(os.path.join(BRAND_DIR, "branding.svg"), 'w') as f:
         f.write(branding)
 
     DEVNULL = open(os.devnull, 'w')
 
-    subprocess.check_call(["inkscape", "--export-eps", os.path.join(BRAND_DIR, "branding.eps"), os.path.join(BRAND_DIR, "branding.svg"),])
-    subprocess.check_call(["pstoedit", "-nb", "-dt", "-f", "dxf:-polyaslines", os.path.join(BRAND_DIR, "branding.eps"), os.path.join(BRAND_DIR, "branding.dxf")], stderr=DEVNULL)
+    subprocess.check_call(["inkscape", "--export-type", "eps","--export-filename", os.path.join(BRAND_DIR, "branding.eps"), os.path.join(BRAND_DIR, "branding.svg"),])
+    subprocess.check_call(["pstoedit", "-nb", "-dt", "-f", "dxf:-polyaslines", os.path.join(BRAND_DIR, "branding.eps"), os.path.join(BRAND_DIR, "branding.dxf")], stderr=subprocess.DEVNULL)
 
     # Read base settings
     with open(os.path.join(BASE_DIR, "base-settings.scad"), 'r') as f:
@@ -434,7 +457,7 @@ def main(argv=None):
             combination = opts.key.split(",")
             for idx in range(0, len(combination)):
                 try:
-                    int(combination[idx])
+                    float(combination[idx])
                 except ValueError:
                     combination[idx] = '"%s"' % combination[idx]
             f.write("combination = [%s];\n" % ",".join(combination))
@@ -462,10 +485,22 @@ def main(argv=None):
             f.write("include <includes/default-keycombcuts.scad>;")
             f.write("\n")
 
-    subprocess.check_call(["inkscape", "--export-eps", os.path.join(BASE_DIR, "profile.eps"), opts.profile])
-    subprocess.check_call(["pstoedit", "-nb", "-dt", "-f", "dxf:-polyaslines", os.path.join(BASE_DIR, "profile.eps"), os.path.join(BASE_DIR, "profile.dxf")], stderr=DEVNULL)
-    subprocess.check_call(["openscad", os.path.join(BASE_DIR, "key.scad") ])
-
+    outputname = "key.stl"
+    if opts.refinname:
+        # result
+        code = "NA"
+        if opts.bumpkey:
+            code = "bumbkey"
+        if opts.blank:
+            code = "blank"
+        if opts.key:
+            code = "".join(opts.key.split(","))
+        outputname = "key_{}_{}_{}_{}_{}.stl".format(os.path.basename(opts.profile).replace(".svg", ""), model, code, def_kl, def_tol)
+    elif opts.output:
+        outputname = opts.output
+    subprocess.check_call(["inkscape", "--export-type", "eps","--export-filename", os.path.join(BASE_DIR, "profile.eps"), opts.profile])
+    subprocess.check_call(["pstoedit", "-nb", "-dt", "-f", "dxf:-polyaslines", os.path.join(BASE_DIR, "profile.eps"), os.path.join(BASE_DIR, "profile.dxf")], stderr=subprocess.DEVNULL)
+    subprocess.check_call(["/usr/bin/openscad", os.path.join(BASE_DIR, "key.scad") ])
 
 if __name__ == "__main__":
     sys.exit(main())

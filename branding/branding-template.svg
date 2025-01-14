@@ -53,7 +53,7 @@
      id="layer1">
     <text
        xml:space="preserve"
-       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       style="font-size:50px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        x="168.57143"
        y="263.79074"
        id="text2985"
@@ -65,10 +65,14 @@
          sodipodi:role="line"
          x="168.57143"
          y="313.79074"
-         id="tspan2989">by AutoKey3D</tspan><tspan
+         id="tspan2989">l=%length% t=%tol%</tspan><tspan
          sodipodi:role="line"
          x="168.57143"
          y="363.79074"
-         id="tspan2985">l=%length% t=%tol%</tspan></text>
+         id="tspan2985">c=%code%</tspan><tspan
+         sodipodi:role="line"
+         x="168.57143"
+         y="463.79074"
+         id="tspan2985">by AutoKey3D</tspan></text>
   </g>
 </svg>

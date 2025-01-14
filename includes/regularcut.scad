@@ -1,4 +1,5 @@
-module keycombcut(cutnum, cutlevel, loc_aspace, lcut_mode=false, lcut1=false, lcut2=false, rot=0, xcorr=0) {
+module keycombcut(cutnum, cutlevel, loc_aspace, lcut_mode=false, lcut1=false, lcut2=false, rot=0, xcorr=0, realdim=false) {
+   // echo(cutnum, cutlevel, loc_aspace, lcut_mode, lcut1, lcut2, rot, xcorr);
    lcut = lcut1 || lcut2;
    cutdim = 10;
    d = cutdim / sqrt(2); // Diagonal of the cutting rect
@@ -19,7 +20,9 @@ module keycombcut(cutnum, cutlevel, loc_aspace, lcut_mode=false, lcut1=false, lc
    ycorrect = d * sin(rotangle2) / cos(rotangle2/2) * sin(45+rotangle2/2);
    zcorrect = d * sin(-rotangle2) / cos(-rotangle2/2) * sin(45-rotangle2/2);
 
-   translate([0, addcutdepth + hcut-(cutlevel*cutspace + cutcorr + lcutcorr), 0])
+   cutsize = realdim ? (ph - cutlevel) : (addcutdepth + hcut-(cutlevel*cutspace + cutcorr + lcutcorr)); 
+      
+   translate([0, cutsize, 0])
    translate([0,0,(loc_aspace + addaspace + cutnum*pinspace)*-1])  // Pin position
    translate([0,-cutdim/2 + tol, -cutdim/2 + kl/2]) // Center the cutter at 0. We need to add the tolerance to reach the lower end of the thinned key.
    //translate([0,-cutdim/2, -cutdim/2 + kl/2]) // Center the cutter at 0. We need to add the tolerance to reach the lower end of the thinned key.
